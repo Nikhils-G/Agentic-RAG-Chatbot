@@ -1,6 +1,5 @@
 import sys
 import os
-# Add project root directory to sys.path
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
@@ -34,7 +33,6 @@ IngestionAgent(dispatcher, vector_store, parsers_dict)
 RetrievalAgent(dispatcher, vector_store)
 LLMResponseAgent(dispatcher)
 
-# 🎨 Clean, Professional CSS
 st.markdown("""
 <style>
 /* Import clean, modern font */
