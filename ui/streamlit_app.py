@@ -50,7 +50,7 @@ footer {visibility: hidden;}
     --primary-color: #2563eb;
     --primary-hover: #1d4ed8;
     --secondary-color: #64748b;
-    --background: #f8fafc;
+    --background: #C9B27C;
     --surface: #ffffff;
     --text-primary: #1e293b;
     --text-secondary: #64748b;
@@ -305,7 +305,7 @@ footer {visibility: hidden;}
 st.markdown("""
 <div class="app-header">
     <h1 class="app-title">🤖 Agentic RAG System</h1>
-    <p class="app-subtitle">Advanced document intelligence powered by multi-agent architecture</p>
+    <p class="app-subtitle">       </p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -354,27 +354,49 @@ st.markdown("""
         <h2 class="card-title">Ask a Question</h2>
     </div>
     <p class="card-description">Enter your question about the uploaded document</p>
+</div>
 """, unsafe_allow_html=True)
 
 query = st.text_input("Your question", placeholder="What would you like to know about the document?")
 
 if query:
-    with st.spinner("Analyzing your question..."):
-        retrieval_msg = MCPMessage(
-            sender="UI",
-            receiver="RetrievalAgent",
-            type="QUERY_REQUEST",
-            trace_id="trace-002",
-            payload={"query": query}
-        )
-        dispatcher.send_message(retrieval_msg)
+    if not uploaded_file:
+        st.markdown("""
+        <div style="color: black; background-color: #fff3cd; border-left: 6px solid #ffeeba; padding: 1em; border-radius: 4px;">
+            ⚠️ Please upload a document before asking a question.
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        with st.spinner("Analyzing your question..."):
+            retrieval_msg = MCPMessage(
+                sender="UI",
+                receiver="RetrievalAgent",
+                type="QUERY_REQUEST",
+                trace_id="trace-002",
+                payload={"query": query}
+            )
+            dispatcher.send_message(retrieval_msg)
+
     
     # Display response
-    if "llm_response" in st.session_state:
-        st.markdown("### 🎯 Response")
-        st.text_area("AI Response", st.session_state["llm_response"], height=200, disabled=True)
-    else:
-        st.info("🔄 Processing your question...")
+if "llm_response" in st.session_state:
+    st.markdown("### 🎯 Response")
+    st.markdown(f"""
+    <div style="
+        background-color: #ffffff;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        color: black;
+        font-size: 1rem;
+        line-height: 1.6;
+        overflow: visible;
+        white-space: pre-wrap;
+    ">
+    {st.session_state["llm_response"]}
+    </div>
+    """, unsafe_allow_html=True)
+
 
 st.markdown("</div>", unsafe_allow_html=True)
 
@@ -388,9 +410,113 @@ with st.expander("🔧 System Information"):
     - Message Dispatcher: Running
     """)
 
-# Footer
 st.markdown("""
-<div style="text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.9rem;">
-    Powered by Multi-Agent RAG Architecture
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+.footer-container {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    padding: 2.5rem 1rem;
+    border-top: 3px solid #64748b;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    animation: slideFadeIn 1.3s ease-in-out both;
+    border-radius: 1.5rem 1.5rem 0 0;
+    color: #f1f5f9;
+    box-shadow: 0 -8px 24px rgba(0,0,0,0.2);
+}
+
+.footer-text {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    animation: floatUp 1.4s ease forwards;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-links a {
+    color: #38bdf8;
+    font-weight: 500;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.4s ease;
+    transform: translateY(0);
+    animation: bounceIn 1s ease both;
+}
+
+.footer-links a:hover {
+    color: #7dd3fc;
+    transform: scale(1.1) rotate(-1deg);
+    filter: drop-shadow(0 0 6px #38bdf8);
+}
+
+.footer-links i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.footer-links a:hover i {
+    transform: rotate(10deg) scale(1.3);
+}
+
+/* Keyframe Animations */
+@keyframes slideFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+</style>
+
+<div class="footer-container">
+    <div class="footer-text"> Developed by <b>Nikhil Sukthe</b></div>
+    <div class="footer-links">
+        <a href="https://nikhilsukthe.vercel.app/" target="_blank"><i class="fas fa-rocket"></i>Portfolio</a>
+        <a href="http://www.linkedin.com/in/nikhilsukthe" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
+        <a href="https://github.com/Nikhils-G" target="_blank"><i class="fab fa-github"></i>GitHub</a>
+        <a href="https://www.instagram.com/nikh6l/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+    </div>
 </div>
 """, unsafe_allow_html=True)
