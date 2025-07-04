@@ -26,7 +26,6 @@ The system supports document uploads in formats including **PDF, PPTX, DOCX, CSV
 
 ## Project Structure
 
-```
 agentic_rag_chatbot/
 ├── agents/
 │   ├── ingestion_agent.py
@@ -46,14 +45,22 @@ agentic_rag_chatbot/
 │   ├── csv_parser.py
 │   └── txt_parser.py
 │
+├── embeddings/
+│   └── embedder.py       
+│
+├── utils/
+│   └── chunking.py               
+│
 ├── ui/
 │   └── streamlit_app.py
 │
-├── static/
+├── static/                      
+│
+├── main.py                      
 ├── README.md
 ├── requirements.txt
 └── .gitignore
-```
+
 
 ---
 
