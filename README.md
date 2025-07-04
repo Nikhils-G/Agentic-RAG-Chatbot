@@ -25,6 +25,7 @@ The system supports document uploads in formats including **PDF, PPTX, DOCX, CSV
 ---
 
 ## Project Structure
+'''
 
 agentic_rag_chatbot/
 ├── agents/
@@ -60,7 +61,7 @@ agentic_rag_chatbot/
 ├── README.md
 ├── requirements.txt
 └── .gitignore
-
+'''
 
 ---
 
