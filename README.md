@@ -1,86 +1,84 @@
-## Agentic RAG Chatbot
+# Agentic RAG Chatbot
 
-### Overview
+## Overview
 
-This project implements an **Agent-based Retrieval-Augmented Generation (RAG) Chatbot** capable of answering questions based on uploaded multi-format documents. The chatbot uses an **agentic architecture with a Model Context Protocol (MCP)** for message passing between agents, facilitating modularity and clear inter-agent communication.
+This project is a Retrieval-Augmented Generation (RAG) chatbot built using a multi-agent architecture. It answers user questions based on the content of uploaded documents in different formats. Each agent in the system has a specific role and communicates using a custom message format called Model Context Protocol (MCP).
 
-The system supports document uploads in formats including **PDF, PPTX, DOCX, CSV, and TXT**, parses the content, semantically retrieves relevant context, and generates answers using a Large Language Model (LLM) via Cohere API.
-
----
-
-## Features
-
-* **Upload and Ingest Documents** (PDF, PPTX, DOCX, CSV, TXT)
-* **Multi-Agent System Architecture**
-
-  * Ingestion Agent: Parses and preprocesses documents.
-  * Retrieval Agent: Embeds content and performs semantic search.
-  * LLM Response Agent: Formats prompts and generates final answers.
-* **Model Context Protocol (MCP) for message-based agent coordination**
-* **FAISS vector store for fast similarity search**
-* **Cohere LLM (command-r-plus) integration for response generation**
-* **Clean, responsive Streamlit UI**
-* **Multi-turn question answering on ingested document context**
+The chatbot supports multiple file types like PDF, PPTX, DOCX, CSV, and TXT/Markdown, and uses a language model to provide answers with relevant context.
 
 ---
 
-## Project Structure
+## Key Features
 
+* **Document Upload and Parsing**
+  Supports PDF, PPTX, DOCX, CSV, and TXT/Markdown formats.
 
+* **Agent-Based Design**
+
+  * **IngestionAgent**: Parses and chunks documents.
+  * **RetrievalAgent**: Handles embedding and semantic search.
+  * **LLMResponseAgent**: Builds final prompt and generates answers.
+
+* **Model Context Protocol (MCP)**
+  Used for communication between agents with structured message objects.
+
+* **Semantic Search with FAISS**
+  Embedding-based retrieval using FAISS and sentence-transformers.
+
+* **Streamlit UI**
+  Clean interface for uploading documents and interacting with the chatbot.
+
+* **Multi-Turn QA Support**
+  Handles follow-up questions using the retrieved document context.
+
+---
+
+## Folder Structure
+
+```
 agentic_rag_chatbot/
-│
 ├── agents/
 │   ├── ingestion_agent.py
 │   ├── retrieval_agent.py
 │   ├── llm_response_agent.py
-│   ├── coordinator_agent.py (optional)
-│
+│   └── coordinator_agent.py
 ├── embeddings/
 │   └── embedder.py
-│
 ├── parsers/
 │   ├── pdf_parser.py
 │   ├── pptx_parser.py
 │   ├── docx_parser.py
 │   ├── csv_parser.py
 │   └── txt_parser.py
-│
 ├── vector_store/
 │   └── faiss_store.py
-│
 ├── mcp/
 │   └── message_dispatcher.py
 |   └── __init__.py
-│
 ├── ui/
 │   └── streamlit_app.py
-│
 ├── utils/
 │   └── chunking.py
-│
 ├── main.py
 ├── README.md
 └── requirements.txt
+```
 
 ---
 
 ## System Flow
 
-1. **User uploads document** via Streamlit UI.
-2. **Ingestion Agent** parses and embeds document content into FAISS vector store.
-3. User enters a question through the interface.
-4. **Retrieval Agent** performs semantic similarity search to find top relevant chunks.
-5. **LLM Response Agent** formats a prompt combining retrieved context and user query, sends it to the Cohere API.
-6. Generated answer is displayed on the UI.
+1. User uploads a document through the UI.
+2. The **IngestionAgent** parses and processes the document content into chunks and stores them in FAISS.
+3. When a user asks a question, the **RetrievalAgent** performs semantic search to fetch relevant chunks.
+4. The **LLMResponseAgent** formats a query using both context and question and calls the LLM API.
+5. The response is returned and shown to the user, along with the source context.
 
-**All inter-agent communications are handled via MCP messages.**
+All agents exchange information using MCP messages to keep the architecture modular and traceable.
 
 ---
 
-## MCP (Model Context Protocol)
-
-A lightweight, structured protocol for agent communication through in-memory message passing.
-Typical MCP message format:
+## MCP Format Example
 
 ```json
 {
@@ -99,79 +97,80 @@ Typical MCP message format:
 
 ## Technologies Used
 
-* **Python 3.11+**
-* **Cohere API (command-r-plus model)**
-* **FAISS (Facebook AI Similarity Search)**
-* **Streamlit** for front-end UI
-* **Sentence Transformers (all-MiniLM-L6-v2)** for text embeddings
-* **python-pptx**, **python-docx**, **PyMuPDF**, **Pandas** for document parsing
+* Python 3.11+
+* Streamlit (UI)
+* Cohere API (LLM - `command-r-plus`)
+* FAISS (Vector Search)
+* Sentence Transformers (`all-MiniLM-L6-v2`)
+* python-pptx, python-docx, PyMuPDF, pandas
 
 ---
 
-## Installation and Setup
+## Getting Started
 
 1. **Clone the repository**
 
-```bash
-git clone https://github.com/yourusername/agentic_rag_chatbot.git
-cd agentic_rag_chatbot
-```
+   ```bash
+   git clone https://github.com/yourusername/agentic_rag_chatbot.git
+   cd agentic_rag_chatbot
+   ```
 
-2. **Create and activate virtual environment**
+2. **Create a virtual environment**
 
-```bash
-python -m venv venv
-source venv/bin/activate  # For Windows: venv\Scripts\activate
-```
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
 3. **Install dependencies**
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 4. **Add your Cohere API key**
+   Open `agents/llm_response_agent.py` and set your key:
 
-Replace the placeholder in `agents/llm_response_agent.py`:
+   ```python
+   co = cohere.Client("YOUR_COHERE_API_KEY")
+   ```
 
-```python
-co = cohere.Client("YOUR_COHERE_API_KEY")
-```
+5. **Run the app**
 
-5. **Run the Streamlit app**
-
-```bash
-streamlit run ui/streamlit_app.py
-```
+   ```bash
+   streamlit run ui/streamlit_app.py
+   ```
 
 ---
 
-## Deliverables
+## Video Explanation
 
-* Complete, clean, well-organized codebase
-* Architecture diagram (MCP agent-based flow)
-* System flow diagram (message passing structure)
-* UI Screenshots
-* PPT Presentation (included in `docs/`)
-* (Optional) 5-minute walkthrough video
+[Watch the walkthrough (Demo + Architecture + Code)](https://vimeo.com/your_video_link_here)
+**Total Duration: 5 minutes**
+
+* 1 min: Application Demo
+* 2 min: System Architecture and Flow
+* 2 min: Code Walkthrough
 
 ---
 
 ## Challenges Faced
 
-* Managing seamless message passing and traceability via MCP
-* Parsing inconsistencies between different document formats
-* Embedding large documents efficiently into FAISS
-* Handling multi-turn queries with context retention
-* Dealing with third-party package compatibility issues in Python 3.11+
+* Handling parsing inconsistencies across different document types
+* Managing MCP message flow clearly across agents
+* Embedding large documents efficiently
+* Supporting multi-turn conversation context
+* Resolving dependency compatibility issues in Python 3.11+
 
 ---
 
-## Future Improvements
+## Future Scope
 
-* Add support for Markdown and Excel formats
-* Integrate other LLM providers like OpenAI, Mistral, or LLaMA 3
-* Deploy as a web service using FastAPI and Docker
-* Implement asynchronous message queues (e.g., RabbitMQ, Kafka)
-* Multi-user support with chat history management
-* Add PDF page-wise retrieval and context highlighting
+* Add Excel and Markdown support
+* Include other LLMs like OpenAI, Mistral, Claude
+* Switch to FastAPI + Docker deployment
+* Use message brokers like Kafka/RabbitMQ for better async handling
+* Add user-based session and chat history
+* Highlight document chunks used in answers
+
+---
