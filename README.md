@@ -25,19 +25,18 @@ The system supports document uploads in formats including **PDF, PPTX, DOCX, CSV
 ---
 
 ## Project Structure
-'''
+
 
 agentic_rag_chatbot/
+│
 ├── agents/
 │   ├── ingestion_agent.py
 │   ├── retrieval_agent.py
-│   └── llm_response_agent.py
+│   ├── llm_response_agent.py
+│   ├── coordinator_agent.py (optional)
 │
-├── mcp/
-│   └── message_dispatcher.py
-│
-├── vector_store/
-│   └── faiss_store.py
+├── embeddings/
+│   └── embedder.py
 │
 ├── parsers/
 │   ├── pdf_parser.py
@@ -46,22 +45,22 @@ agentic_rag_chatbot/
 │   ├── csv_parser.py
 │   └── txt_parser.py
 │
-├── embeddings/
-│   └── embedder.py       
+├── vector_store/
+│   └── faiss_store.py
 │
-├── utils/
-│   └── chunking.py               
+├── mcp/
+│   └── message_dispatcher.py
+|   └── __init__.py
 │
 ├── ui/
 │   └── streamlit_app.py
 │
-├── static/                      
+├── utils/
+│   └── chunking.py
 │
-├── main.py                      
+├── main.py
 ├── README.md
-├── requirements.txt
-└── .gitignore
-'''
+└── requirements.txt
 
 ---
 
