@@ -2,8 +2,18 @@ services:
   - type: web
     name: agenticrag-chatbot
     env: python
-    buildCommand: ""
-    startCommand: streamlit run ui/streamlit_app.py --server.port 10000
+    plan: free
+    region: oregon
+
+    runtime: python
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: streamlit run ui/streamlit_app.py --server.port=$PORT --server.enableCORS=false
+
     envVars:
       - key: COHERE_API_KEY
-        value: your-cohere-key-here
+        value: your-real-api-key-here
+
+    # Optional: restrict Python version
+    pythonVersion: 3.11.9
