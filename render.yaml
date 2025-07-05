@@ -1,19 +1,11 @@
 services:
   - type: web
-    name: agenticrag-chatbot
+    name: agentic-rag-chatbot
     env: python
     plan: free
     region: oregon
-
-    runtime: python
-    buildCommand: |
-      pip install --upgrade pip
-      pip install -r requirements.txt
-    startCommand: streamlit run ui/streamlit_app.py --server.port=$PORT --server.enableCORS=false
-
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "streamlit run app.py"
     envVars:
-      - key: COHERE_API_KEY
-        value: your-real-api-key-here
-
-    # Optional: restrict Python version
-    pythonVersion: 3.11.9
+      - key: PYTHON_VERSION
+        value: "3.12.3"
