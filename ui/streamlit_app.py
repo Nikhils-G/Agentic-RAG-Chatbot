@@ -307,7 +307,7 @@ footer {visibility: hidden;}
 # 🏠 Header Section
 st.markdown("""
 <div class="app-header">
-    <h1 class="app-title">🤖 Agentic RAG System</h1>
+    <h1 class="app-title"> ⧉ Agentic RAG System  </h1>
     <p class="app-subtitle">       </p>
 </div>
 """, unsafe_allow_html=True)
