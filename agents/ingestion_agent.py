@@ -1,7 +1,6 @@
 # agents/ingestion_agent.py
 
 from utils.chunking import chunk_text
-from embeddings.embedder import get_embeddings
 
 class IngestionAgent:
     def __init__(self, dispatcher, vector_store, parsers):
