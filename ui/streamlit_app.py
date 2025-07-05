@@ -1,5 +1,8 @@
 import sys
 import os
+import time
+
+# Add project root directory to sys.path
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
@@ -33,6 +36,7 @@ IngestionAgent(dispatcher, vector_store, parsers_dict)
 RetrievalAgent(dispatcher, vector_store)
 LLMResponseAgent(dispatcher)
 
+# 🎨 Clean, Professional CSS
 st.markdown("""
 <style>
 /* Import clean, modern font */
@@ -357,6 +361,7 @@ st.markdown("""
 
 query = st.text_input("Your question", placeholder="What would you like to know about the document?")
 
+
 if query:
     if not uploaded_file:
         st.markdown("""
@@ -365,20 +370,85 @@ if query:
         </div>
         """, unsafe_allow_html=True)
     else:
-        with st.spinner("Analyzing your question..."):
-            retrieval_msg = MCPMessage(
-                sender="UI",
-                receiver="RetrievalAgent",
-                type="QUERY_REQUEST",
-                trace_id="trace-002",
-                payload={"query": query}
-            )
-            dispatcher.send_message(retrieval_msg)
+        # Custom Loading Animation
+        loading_html = """
+        <style>
+        .loader {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 20px;
+        }
+        .dot {
+          width: 16px;
+          height: 16px;
+          margin: 0 6px;
+          border-radius: 50%;
+          background-color: #1f77b4;
+          animation: bounce 1.4s infinite;
+        }
+        .dot:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        .dot:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+          0%, 80%, 100% {
+            transform: scale(0);
+          } 
+          40% {
+            transform: scale(1.0);
+          }
+        }
+        </style>
+        <div class="loader">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <p style="text-align:center; font-weight:bold;">Analyzing your question...</p>
+        """
+        loading_placeholder = st.empty()
+        loading_placeholder.markdown(loading_html, unsafe_allow_html=True)
+
+        # Simulate processing time (replace with real logic)
+        time.sleep(3)  # You can remove this in actual use
+
+        # Clear the loader after processing
+        loading_placeholder.empty()
+
+        # Now do actual work
+        retrieval_msg = MCPMessage(
+            sender="UI",
+            receiver="RetrievalAgent",
+            type="QUERY_REQUEST",
+            trace_id="trace-002",
+            payload={"query": query}
+        )
+        dispatcher.send_message(retrieval_msg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
     # Display response
 if "llm_response" in st.session_state:
-    st.markdown("### 🎯 Response")
+    st.markdown("### Agentic Analysis ")
     st.markdown(f"""
     <div style="
         background-color: #ffffff;
