@@ -10,7 +10,6 @@ class RetrievalAgent:
 
     def handle(self, message):
         query = message.payload["query"]
-        query_embedding = get_embeddings([query])[0]
         top_chunks = self.vector_store.search(query_embedding)
         response = MCPMessage(
             sender="RetrievalAgent",
