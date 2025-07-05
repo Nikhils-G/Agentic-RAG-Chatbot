@@ -9,7 +9,6 @@ if PROJECT_ROOT not in sys.path:
 print("Python PATH:", sys.path)
 print("Working dir:", os.getcwd())
 from mcp.message_dispatcher import MCPDispatcher, MCPMessage
-from agents.ingestion_agent import IngestionAgent
 from agents.retrieval_agent import RetrievalAgent
 from agents.llm_response_agent import LLMResponseAgent
 from vector_store.faiss_store import VectorStore
