@@ -1,6 +1,5 @@
 # agents/retrieval_agent.py
 
-from embeddings.embedder import get_embeddings
 from mcp.message_dispatcher import MCPMessage
 
 class RetrievalAgent:
