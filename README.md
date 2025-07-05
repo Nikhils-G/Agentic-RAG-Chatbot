@@ -145,8 +145,7 @@ All agents exchange information using MCP messages to keep the architecture modu
 
 ## Video Explanation
 
-[Watch the walkthrough (Demo + Architecture + Code)](https://vimeo.com/your_video_link_here)
-**Total Duration: 5 minutes**
+[Watch the walkthrough (Demo + Architecture + Code)](https://vimeo.com/1098989359?share=copy)
 
 * 1 min: Application Demo
 * 2 min: System Architecture and Flow
