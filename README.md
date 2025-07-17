@@ -42,7 +42,7 @@ agentic_rag_chatbot/
 │   ├── ingestion_agent.py
 │   ├── retrieval_agent.py
 │   ├── llm_response_agent.py
-│   └── coordinator_agent.py
+|
 ├── embeddings/
 │   └── embedder.py
 ├── parsers/
