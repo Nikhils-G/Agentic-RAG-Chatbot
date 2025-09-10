@@ -25,3 +25,4 @@ IngestionAgent(dispatcher, vector_store, parsers)
 RetrievalAgent(dispatcher, vector_store)
 LLMResponseAgent(dispatcher)
 
+# Simulate message passing manually for testing
